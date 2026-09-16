@@ -1,0 +1,27 @@
+{
+  "name": "node_project",
+  "version": "1.0.0",
+  "description": "my app",
+  "homepage": "https://github.com/cyrille0880/Node_project#readme",
+  "bugs": {
+    "url": "https://github.com/cyrille0880/Node_project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyrille0880/Node_project.git"
+  },
+  "license": "ISC",
+  "author": "Cyrille Nfonga",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+  "dev": "nodemon",
+  "start": "node server.js"
+},
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
