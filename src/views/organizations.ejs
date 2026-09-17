@@ -1,23 +1,8 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>organizations</title>
-    <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h1>organizations</h1>
-        <p>
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+    <p>
             
 <p>Here are a few of our partner organizations:</p>
 <ul>
@@ -26,6 +11,5 @@
     <li><img src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo"><strong>UnityServe Volunteers</strong>: hello@unityserve.org</li>
 </ul>
         </p>
-    </main>
-</body>
-</html>
+</main>
+<%- include('partials/footer') %>
