@@ -51,3 +51,16 @@ INSERT INTO  service_project(organization_id, title, description, location, proj
 (3, 'Soup Kitchen Meal Prep', 'Cooking, serving, and cleaning up dinner for local community members.', 'Hope Shelter', '2026-11-22'),
 (3, 'Holiday Toy Repair & Cleaning', 'Restoring and wrapping gently used toys for family donations.', 'Civic Hall', '2026-12-01'),
 (3, 'Blood Drive Support', 'Assisting medical staff with donor check-in and refreshment tables.', 'Red Cross Center', '2026-12-15');
+
+
+CREATE TABLE IF NOT EXISTS categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE IF NOT EXISTS project_categories (
+    project_id INT NOT NULL REFERENCES service_project(project_id) ON DELETE CASCADE,
+    category_id INT NOT NULL REFERENCES categories(category_id) ON DELETE CASCADE,
+    PRIMARY KEY (project_id, category_id)
+);
