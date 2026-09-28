@@ -1,17 +1,14 @@
+<%- include('partials/header') %>   
+    <main>
+        <h1><%= title %></h1>
+        
+        <p>Here are a few of our partner organizations:</p>
+        <ul>
 
-<%- include('partials/header') %>
-<main>
-    <h1><%= title %></h1>
+            <% projects.forEach(project => { %>
+                <li><strong><%= service_project.title %></strong>: <%= service_project.location %>: <%= service_project.project_date%></li>
+            <% }); %>
+        </ul>
+    </main>
 
-    <p>
-            
-<h2>Upcoming Service Projects</h2>
-<ul>
-    <li>Park Cleanup - Join us to clean up local parks and make them beautiful!</li>
-    <li>Food Drive - Help collect and distribute food to those in need.</li>
-    <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
-</ul>
-        </p>
-    
-</main>
 <%- include('partials/footer') %>
