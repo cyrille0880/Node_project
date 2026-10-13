@@ -53,14 +53,60 @@ INSERT INTO  service_project(organization_id, title, description, location, proj
 (3, 'Blood Drive Support', 'Assisting medical staff with donor check-in and refreshment tables.', 'Red Cross Center', '2026-12-15');
 
 
-CREATE TABLE IF NOT EXISTS categories (
+
+--------------------------------------------------------------------------------
+-- 4. SERVICE PROJECT CATEGORIES (Many-to-Many Relationship Setup)
+--------------------------------------------------------------------------------
+
+-- Create the category table
+CREATE TABLE category (
     category_id SERIAL PRIMARY KEY,
-    category_name VARCHAR(100) NOT NULL UNIQUE
+    name VARCHAR(100) NOT NULL UNIQUE
 );
 
-
-CREATE TABLE IF NOT EXISTS project_categories (
-    project_id INT NOT NULL REFERENCES service_project(project_id) ON DELETE CASCADE,
-    category_id INT NOT NULL REFERENCES categories(category_id) ON DELETE CASCADE,
-    PRIMARY KEY (project_id, category_id)
+-- Create the junction table to support many-to-many relationship between projects and categories
+CREATE TABLE project_category (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id) 
+        REFERENCES service_project (project_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id) 
+        REFERENCES category (category_id)
+        ON DELETE CASCADE
 );
+
+-- Insert relevant service project categories (at least 3)
+INSERT INTO category (name) VALUES
+('Environment'),
+('Community Outreach'),
+('Education'),
+('Health & Wellness'),
+('Animal Welfare');
+
+-- Associate each project in the database with at least one category
+INSERT INTO project_category (project_id, category_id) VALUES
+-- Organization 1 Projects (IDs 1-5)
+(1, 1), -- Community Garden Clean Up -> Environment
+(1, 2), -- Community Garden Clean Up -> Community Outreach
+(2, 2), -- Food Pantry Sorting -> Community Outreach
+(3, 1), -- Urban Tree Planting -> Environment
+(4, 2), -- Winter Coat Collection -> Community Outreach
+(5, 3), -- Senior Tech Literacy Workshop -> Education
+
+-- Organization 2 Projects (IDs 6-10)
+(6, 1), -- Coastal Beach Restoration -> Environment
+(7, 1), -- Neighborhood E-Waste Recycling -> Environment
+(8, 2), -- Park Bench Restoration -> Community Outreach
+(9, 1), -- Hiking Trail Maintenance -> Environment
+(10, 2), -- City Street Cleanup -> Community Outreach
+
+-- Organization 3 Projects (IDs 11-15)
+(11, 3), -- After-School Math Tutoring -> Education
+(12, 3), -- Charity Book Sale Prep -> Education
+(13, 4), -- Soup Kitchen Meal Prep -> Health & Wellness
+(14, 2), -- Holiday Toy Repair & Cleaning -> Community Outreach
+(15, 4); -- Blood Drive Support -> Health & Wellness

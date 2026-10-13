@@ -2,14 +2,16 @@
 <%- include('partials/header') %>
 <main>
     <h1><%= title %></h1>
-   
-    <p>      
-<ul>
-    <li>environmental</li>
-    <li> educational</li>
-    <li>community service</li>
-    <li>health and wellness</li>
-</ul>
-    </p>
+
+    <p>Project category associations:</p>
+    <ul class="category-list">
+        <% if (categories.length > 0) { %>
+            <% categories.forEach(category => { %>
+                <li>Project <%= category.project_id %>: Category <%= category.category_id %></li>
+            <% }); %>
+        <% } else { %>
+            <li>No project categories found.</li>
+        <% } %>
+    </ul>
 </main>
 <%- include('partials/footer') %>
