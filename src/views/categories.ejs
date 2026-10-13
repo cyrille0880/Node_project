@@ -3,11 +3,11 @@
 <main>
     <h1><%= title %></h1>
 
-    <p>Project category associations:</p>
+    <p>Browse service projects by category:</p>
     <ul class="category-list">
         <% if (categories.length > 0) { %>
             <% categories.forEach(category => { %>
-                <li>Project <%= category.project_id %>: Category <%= category.category_id %></li>
+                <li><strong><%= category.category_name %></strong>: <%= category.project_title %></li>
             <% }); %>
         <% } else { %>
             <li>No project categories found.</li>
