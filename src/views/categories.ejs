@@ -7,7 +7,7 @@
     <ul class="category-list">
         <% if (categories.length > 0) { %>
             <% categories.forEach(category => { %>
-                <li><strong><%= category.category_name %></strong>: <%= category.project_title %></li>
+                <li><a href="/category/<%= category.category_id %>"><strong><%= category.category_name %></strong></a>: <%= category.project_title %></li>
             <% }); %>
         <% } else { %>
             <li>No project categories found.</li>

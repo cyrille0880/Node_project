@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= project.title %></h1>
+
+    <p><%= project.description || 'No description is available for this project.' %></p>
+
+    <dl>
+        <dt>Organization</dt>
+        <dd><a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></dd>
+
+        <dt>Location</dt>
+        <dd><%= project.location %></dd>
+
+        <dt>Project date</dt>
+        <dd><%= project.date %></dd>
+
+        <dt>Categories</dt>
+        <dd>
+            <% if (categories.length > 0) { %>
+                <ul class="category-tags">
+                    <% categories.forEach(category => { %>
+                        <li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                None assigned
+            <% } %>
+        </dd>
+    </dl>
+</main>
+<%- include('partials/footer') %>
