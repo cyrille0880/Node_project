@@ -1,5 +1,6 @@
 
 import { body, validationResult } from 'express-validator';
+import {
     createOrganization,
     getAllOrganizations,
     getOrganizationDetails,
@@ -77,25 +78,23 @@ const showNewOrganizationForm = async (req, res) => {
 };
 
 const processNewOrganizationForm = async (req, res) => {
-    const formData = getOrganizationFormData(req.body);
-    const error = validateOrganization(formData);
-    if (error) {
-        return res.status(400).render('new-organization', {
-            title: 'Add New Organization',
-            formData,
-            error
+    // Check for validation errors
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+        // Validation failed - loop through errors
+        results.array().forEach((error) => {
+            req.flash('error', error.msg);
         });
+
+        // Redirect back to the new organization form
+        return res.redirect('/new-organization');
     }
 
-    const logoFilename = 'placeholder-logo.png'; // Use the placeholder logo for all new organizations
+    const { name, description, contactEmail } = req.body;
+    const logoFilename = 'placeholder-logo.png'; // Use the placeholder logo for all new organizations    
 
-    const organizationId = await createOrganization(
-        formData.name,
-        formData.description,
-        formData.contactEmail,
-        logoFilename
-    );
-    req.flash('success', 'Organization created successfully.');
+    const organizationId = await createOrganization(name, description, contactEmail, logoFilename);
+    req.flash('success', 'Organization added successfully!');
     res.redirect(`/organization/${organizationId}`);
 };
 

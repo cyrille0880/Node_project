@@ -203,6 +203,41 @@ body {
     color: var(--error);
 }
 
+.category-checkboxes {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+}
+
+.category-checkboxes legend {
+    padding-inline: 0.35rem;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 2.5rem;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.category-checkbox input {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: var(--green);
+}
+
+.category-checkbox input:focus-visible {
+    outline: 3px solid var(--green);
+    outline-offset: 2px;
+}
+
 
 
 /* Flash message styles */

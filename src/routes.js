@@ -13,8 +13,10 @@ import {
 import {
 	processEditCategoryForm,
 	processNewCategoryForm,
+	processAssignCategoriesForm,
 	showCategoriesPage,
 	showCategoryDetailsPage,
+	showAssignCategoriesForm,
 	showEditCategoryForm,
 	showNewCategoryForm
 } from './controllers/categories.js';
@@ -37,6 +39,8 @@ router.post('/new-project', processNewProjectForm);
 router.get('/projects', showProjectsPage);
 router.get('/edit-project/:id', showEditProjectForm);
 router.post('/edit-project/:id', processEditProjectForm);
+router.get('/assign-categories/:projectId', showAssignCategoriesForm);
+router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 router.get('/project/:id', showProjectDetailsPage);
 router.get('/categories', showCategoriesPage);
 router.get('/new-category', showNewCategoryForm);

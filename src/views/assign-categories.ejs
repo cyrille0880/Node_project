@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= project.title %></h1>
+    <h2><%= title %></h2>
+
+    <form action="/assign-categories/<%= project.project_id %>" method="POST" class="form-panel">
+        <% const assignedCategoryIds = new Set(assignedCategories.map(category => String(category.category_id))); %>
+        <% if (categories.length > 0) { %>
+            <fieldset class="category-checkboxes">
+                <legend>Project categories</legend>
+                <% categories.forEach(category => { %>
+                    <label class="category-checkbox" for="category-<%= category.category_id %>">
+                        <input
+                            type="checkbox"
+                            id="category-<%= category.category_id %>"
+                            name="categoryIds"
+                            value="<%= category.category_id %>"
+                            <%= assignedCategoryIds.has(String(category.category_id)) ? 'checked' : '' %>
+                        >
+                        <span><%= category.name %></span>
+                    </label>
+                <% }); %>
+            </fieldset>
+        <% } else { %>
+            <p>No categories are available.</p>
+        <% } %>
+
+        <button type="submit">Save Categories</button>
+        <a href="/project/<%= project.project_id %>">Cancel</a>
+    </form>
+</main>
+<%- include('partials/footer') %>

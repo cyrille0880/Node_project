@@ -114,6 +114,33 @@ const updateCategory = async (categoryId, name) => {
     return result.rows[0].category_id;
 };
 
+const assignCategoryToProject = async (projectId, categoryId) => {
+    const query = `
+        INSERT INTO public.project_category (project_id, category_id)
+        VALUES ($1, $2)
+        ON CONFLICT (project_id, category_id) DO NOTHING;
+    `;
+
+    await db.query(query, [projectId, categoryId]);
+};
+
+const updateCategoryAssignments = async (projectId, categoryIds) => {
+    if (!Array.isArray(categoryIds)) {
+        throw new TypeError('categoryIds must be an array');
+    }
+
+    const uniqueCategoryIds = [...new Set(categoryIds)];
+
+    await db.query(
+        'DELETE FROM public.project_category WHERE project_id = $1;',
+        [projectId]
+    );
+
+    for (const categoryId of uniqueCategoryIds) {
+        await assignCategoryToProject(projectId, categoryId);
+    }
+};
+
 export {
     getAllProjectCategories,
     getAllCategories,
@@ -121,5 +148,6 @@ export {
     getCategoriesByProjectId,
     getProjectsByCategoryId,
     createCategory,
-    updateCategory
+    updateCategory,
+    updateCategoryAssignments
 };

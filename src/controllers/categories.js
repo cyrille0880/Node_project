@@ -2,9 +2,12 @@ import {
     createCategory,
     getAllCategories,
     getCategoryById,
+    getCategoriesByProjectId,
     getProjectsByCategoryId,
-    updateCategory
+    updateCategory,
+    updateCategoryAssignments
 } from '../models/categories.js';
+import { getProjectDetails } from '../models/projects.js';
 
 const validateCategoryName = (value) => {
     const name = typeof value === 'string' ? value.trim() : '';
@@ -112,11 +115,72 @@ const processEditCategoryForm = async (req, res, next) => {
     res.redirect(`/category/${categoryId}`);
 };
 
+const showAssignCategoriesForm = async (req, res, next) => {
+    const projectId = req.params.projectId ?? req.params.id;
+    if (!/^\d+$/.test(projectId)) {
+        const error = new Error('Page Not Found');
+        error.status = 404;
+        return next(error);
+    }
+
+    const project = await getProjectDetails(projectId);
+    if (!project) {
+        const error = new Error('Page Not Found');
+        error.status = 404;
+        return next(error);
+    }
+
+    const [categories, assignedCategories] = await Promise.all([
+        getAllCategories(),
+        getCategoriesByProjectId(projectId)
+    ]);
+
+    res.render('assign-categories', {
+        title: 'Assign Categories to Project',
+        project,
+        categories,
+        assignedCategories
+    });
+};
+
+const processAssignCategoriesForm = async (req, res, next) => {
+    const projectId = req.params.projectId ?? req.params.id;
+    if (!/^\d+$/.test(projectId)) {
+        const error = new Error('Page Not Found');
+        error.status = 404;
+        return next(error);
+    }
+
+    const project = await getProjectDetails(projectId);
+    if (!project) {
+        const error = new Error('Page Not Found');
+        error.status = 404;
+        return next(error);
+    }
+
+    const submittedCategoryIds = req.body.categoryIds;
+    const categoryIds = submittedCategoryIds === undefined
+        ? []
+        : Array.isArray(submittedCategoryIds)
+            ? submittedCategoryIds
+            : [submittedCategoryIds];
+
+    if (categoryIds.some((categoryId) => !/^\d+$/.test(String(categoryId)))) {
+        return res.status(400).send('Select valid categories.');
+    }
+
+    await updateCategoryAssignments(projectId, categoryIds);
+    req.flash('success', 'Project categories updated successfully.');
+    res.redirect(`/project/${projectId}`);
+};
+
 export {
     showCategoriesPage,
     showCategoryDetailsPage,
     showNewCategoryForm,
     processNewCategoryForm,
     showEditCategoryForm,
-    processEditCategoryForm
+    processEditCategoryForm,
+    showAssignCategoriesForm,
+    processAssignCategoriesForm
 };
