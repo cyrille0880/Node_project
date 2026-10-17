@@ -70,6 +70,7 @@ const processNewProjectForm = async (req, res) => {
         ...project,
         description: project.description || null
     });
+    req.flash('success', 'Service project created successfully.');
     res.redirect(`/project/${projectId}`);
 };
 
@@ -160,6 +161,7 @@ const processEditProjectForm = async (req, res, next) => {
         return next(error);
     }
 
+    req.flash('success', 'Service project updated successfully.');
     res.redirect(`/project/${updatedProject.project_id}`);
 };
 

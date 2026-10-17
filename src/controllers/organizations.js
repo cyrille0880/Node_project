@@ -71,6 +71,7 @@ const processNewOrganizationForm = async (req, res) => {
         formData.contactEmail,
         logoFilename
     );
+    req.flash('success', 'Organization created successfully.');
     res.redirect(`/organization/${organizationId}`);
 };
 
@@ -129,6 +130,7 @@ const processEditOrganizationForm = async (req, res, next) => {
         formData.description,
         formData.contactEmail
     );
+    req.flash('success', 'Organization updated successfully.');
     res.redirect(`/organization/${organizationId}`);
 };
 
