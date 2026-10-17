@@ -7,7 +7,7 @@ import { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const NODE_ENV = 'production';
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

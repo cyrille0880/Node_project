@@ -13,7 +13,13 @@
             <li><a href="/organizations">Organizations</a></li>
             <li><a href="/projects">Projects</a></li>
             <li><a href="/categories">Categories</a></li>
-            <li><a href="/register">Register</a></li>
+            <% if (isLoggedIn) { %>
+                <li><a href="/dashboard">My Volunteer Projects</a></li>
+                <li><form action="/logout" method="POST"><button type="submit">Log Out</button></form></li>
+            <% } else { %>
+                <li><a href="/login">Log In</a></li>
+                <li><a href="/register">Register</a></li>
+            <% } %>
         </ul>
     </nav>
 

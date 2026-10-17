@@ -130,3 +130,10 @@ INSERT INTO roles (role_name, role_description) VALUES
     role_id INTEGER REFERENCES roles(role_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE project_volunteers (
+    project_id INT NOT NULL REFERENCES service_project(project_id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    signed_up_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (project_id, user_id)
+);

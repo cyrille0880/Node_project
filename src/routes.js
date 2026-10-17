@@ -3,8 +3,10 @@ import { showOrganizationDetailsPage } from './controllers/organizations.js';
 import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage } from './controllers/organizations.js';
 import {
+	addVolunteerToProject,
 	processEditProjectForm,
 	processNewProjectForm,
+	removeVolunteerFromProject,
 	showEditProjectForm,
 	showNewProjectForm,
 	showProjectDetailsPage,
@@ -28,11 +30,23 @@ import {
 	showNewOrganizationForm
 } from './controllers/organizations.js';
 import { testErrorPage } from './controllers/errors.js';
-import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js';
+import {
+	processLoginForm,
+	processLogout,
+	processUserRegistrationForm,
+	showDashboard,
+	showLoginForm,
+	showUserRegistrationForm
+} from './controllers/users.js';
+import requireLogin from './middleware/requireLogin.js';
 
 const router = express.Router();
 
 router.get('/', showHomePage);
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.post('/logout', requireLogin, processLogout);
+router.get('/dashboard', requireLogin, showDashboard);
 router.get('/register', showUserRegistrationForm);
 router.post('/register', processUserRegistrationForm);
 router.get('/organizations', showOrganizationsPage);
@@ -43,6 +57,8 @@ router.post('/new-project', processNewProjectForm);
 router.get('/projects', showProjectsPage);
 router.get('/edit-project/:id', showEditProjectForm);
 router.post('/edit-project/:id', processEditProjectForm);
+router.post('/project/:id/volunteer', requireLogin, addVolunteerToProject);
+router.post('/project/:id/unvolunteer', requireLogin, removeVolunteerFromProject);
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
 router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 router.get('/project/:id', showProjectDetailsPage);

@@ -3,6 +3,9 @@ import {
     createProject,
     getUpcomingProjects,
     getProjectDetails,
+    addProjectVolunteer,
+    isUserVolunteeringForProject,
+    removeProjectVolunteer,
     updateProject
 } from '../models/projects.js';
 import { getCategoriesByProjectId } from '../models/categories.js';
@@ -92,8 +95,39 @@ const showProjectDetailsPage = async (req, res, next) => {
     }
 
     const categories = await getCategoriesByProjectId(projectId);
-    res.render('project', { title: project.title, project, categories });
+    const isVolunteering = req.session?.user
+        ? await isUserVolunteeringForProject(projectId, req.session.user.user_id)
+        : false;
+    res.render('project', { title: project.title, project, categories, isVolunteering });
 };  
+
+const addVolunteerToProject = async (req, res, next) => {
+    const projectId = req.params.id;
+    const project = await getProjectDetails(projectId);
+    if (!project) {
+        const error = new Error('Page Not Found');
+        error.status = 404;
+        return next(error);
+    }
+
+    await addProjectVolunteer(projectId, req.session.user.user_id);
+    req.flash('success', 'You are now volunteering for this project.');
+    res.redirect(`/project/${projectId}`);
+};
+
+const removeVolunteerFromProject = async (req, res, next) => {
+    const projectId = req.params.id;
+    const project = await getProjectDetails(projectId);
+    if (!project) {
+        const error = new Error('Page Not Found');
+        error.status = 404;
+        return next(error);
+    }
+
+    await removeProjectVolunteer(projectId, req.session.user.user_id);
+    req.flash('success', 'You are no longer volunteering for this project.');
+    res.redirect(`/project/${projectId}`);
+};
 
 const showEditProjectForm = async (req, res, next) => {
     const projectId = req.params.id;
@@ -172,5 +206,7 @@ export {
     showEditProjectForm,
     processEditProjectForm,
     showProjectDetailsPage,
-    showProjectsPage
+    showProjectsPage,
+    addVolunteerToProject,
+    removeVolunteerFromProject
 };

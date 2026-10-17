@@ -3,6 +3,18 @@
     <h1><%= project.title %></h1>
     <p><a href="/edit-project/<%= project.project_id %>">Edit Service Project</a></p>
     <p><a href="/assign-categories/<%= project.project_id %>">Edit Categories</a></p>
+    <% if (isLoggedIn) { %>
+        <% if (isVolunteering) { %>
+            <p>You are volunteering for this project.</p>
+            <form action="/project/<%= project.project_id %>/unvolunteer" method="POST">
+                <button type="submit">Remove yourself</button>
+            </form>
+        <% } else { %>
+            <form action="/project/<%= project.project_id %>/volunteer" method="POST">
+                <button type="submit">Volunteer for this project</button>
+            </form>
+        <% } %>
+    <% } %>
 
     <p><%= project.description || 'No description is available for this project.' %></p>
 
