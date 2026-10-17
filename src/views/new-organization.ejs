@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <% if (error) { %><p class="form-error" role="alert"><%= error %></p><% } %>
+
+    <form action="/new-organization" method="POST" class="form-panel">
+        <div class="form-group">
+            <label for="name">Organization name</label>
+            <input type="text" id="name" name="name" value="<%= formData.name %>" maxlength="150" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required><%= formData.description %></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="contactEmail">Contact email</label>
+            <input type="email" id="contactEmail" name="contactEmail" value="<%= formData.contactEmail %>" maxlength="255" required>
+        </div>
+
+        <button type="submit">Create Organization</button>
+    </form>
+
+</main>
+<%- include('partials/footer') %>

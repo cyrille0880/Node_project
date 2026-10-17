@@ -1,6 +1,7 @@
 <%- include('partials/header') %>
 <main>
     <h1><%= project.title %></h1>
+    <p><a href="/edit-project/<%= project.project_id %>">Edit Service Project</a></p>
 
     <p><%= project.description || 'No description is available for this project.' %></p>
 

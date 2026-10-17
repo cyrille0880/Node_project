@@ -105,3 +105,78 @@ body {
     color: #fff;
     background-color: #26734d;
 }
+
+.form-panel {
+    display: grid;
+    gap: 1rem;
+    width: min(100%, 38rem);
+    margin-block: 1.5rem;
+    padding: 1.25rem;
+    border: 1px solid #d7e2dd;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.form-group {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-weight: 700;
+    color: #183b2b;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid #687a70;
+    border-radius: 4px;
+    background: #fff;
+    color: #1f2f27;
+    font: inherit;
+}
+
+.form-group textarea {
+    min-height: 7rem;
+    resize: vertical;
+}
+
+.form-group input:focus-visible,
+.form-group textarea:focus-visible,
+.form-group select:focus-visible,
+.form-panel button:focus-visible,
+.form-panel a:focus-visible {
+    outline: 3px solid #176b48;
+    outline-offset: 2px;
+}
+
+.form-panel button {
+    justify-self: start;
+    min-height: 2.75rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid #185b3d;
+    border-radius: 4px;
+    background: #185b3d;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.form-panel button:hover {
+    background: #10462e;
+}
+
+.form-error {
+    width: fit-content;
+    max-width: 38rem;
+    padding: 0.65rem 0.85rem;
+    border-left: 4px solid #a12622;
+    background: #fff0ee;
+    color: #711a17;
+}

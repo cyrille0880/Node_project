@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <% if (error) { %><p class="form-error" role="alert"><%= error %></p><% } %>
+
+    <form action="/edit-category/<%= category.category_id %>" method="POST" class="form-panel">
+        <div class="form-group">
+            <label for="name">Category name</label>
+            <input type="text" id="name" name="name" value="<%= category.name %>" maxlength="100" required>
+        </div>
+        <button type="submit">Save Changes</button>
+        <a href="/category/<%= category.category_id %>">Cancel</a>
+    </form>
+</main>
+<%- include('partials/footer') %>

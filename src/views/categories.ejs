@@ -3,11 +3,15 @@
 <main>
     <h1><%= title %></h1>
 
-    
+    <p><a href="/new-category">Create New Category</a></p>
+
     <ul class="category-list">
         <% if (categories.length > 0) { %>
             <% categories.forEach(category => { %>
-                <li><a href="/category/<%= category.category_id %>"><strong><%= category.category_name %></strong></a>: <%= category.project_title %></li>
+                <li>
+                    <a href="/category/<%= category.category_id %>"><strong><%= category.name %></strong></a>
+                    <a href="/edit-category/<%= category.category_id %>">Edit</a>
+                </li>
             <% }); %>
         <% } else { %>
             <li>No project categories found.</li>
